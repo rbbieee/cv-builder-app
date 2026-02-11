@@ -23,6 +23,15 @@ This is mainly a learning project, but I tried to make it clean and usable
 
 ---
 
+## Tech Stack
+
+![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7-purple?style=for-the-badge&logo=vite&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?style=for-the-badge&logo=javascript&logoColor=black)
+![jsPDF](https://img.shields.io/badge/jsPDF-PDF-red?style=for-the-badge)
+
+---
+
 ## How to Run Locally
 
 Make sure you have Node.js installed
