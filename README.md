@@ -73,3 +73,8 @@ cv-builder-app/
 └── README.md
 ```
 
+---
+
+## Notes
+
+This project is created for learning purposes and to improve my frontend development skills. I am still exploring and improving my understanding of React and modern web development 
