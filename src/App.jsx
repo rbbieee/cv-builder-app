@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { jsPDF } from 'jspdf'
 
 function App() {
+  // state for CV data
   const [cvData, setCvData] = useState({
     fullName: '',
     email: '',
@@ -12,12 +13,36 @@ function App() {
     skills: ''
   })
 
+  // state for dark mode
+  const [isDarkMode, setIsDarkMode] = useState(false)
+
+  // load data from LocalStorage 
   useEffect(() => {
     const savedData = localStorage.getItem('cvData')
     if (savedData) {
       setCvData(JSON.parse(savedData))
     }
+
+    // load d a r k m o d e preference
+    const savedDarkMode = localStorage.getItem('darkMode')
+    if (savedDarkMode === 'true') {
+      setIsDarkMode(true)
+      document.body.classList.add('dark-mode')
+    }
   }, [])
+
+  // toggle dark mode
+  const toggleDarkMode = () => {
+    const newMode = !isDarkMode
+    setIsDarkMode(newMode)
+    localStorage.setItem('darkMode', newMode)
+    
+    if (newMode) {
+      document.body.classList.add('dark-mode')
+    } else {
+      document.body.classList.remove('dark-mode')
+    }
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -44,7 +69,7 @@ function App() {
   const exportPDF = () => {
     const doc = new jsPDF()
     
-    let y = 20 
+    let y = 20
     
     doc.setFontSize(24)
     doc.setFont(undefined, 'bold')
@@ -58,7 +83,6 @@ function App() {
     
     y += 15
     
-    // PROFESSIONAL SUMMARY
     if (cvData.summary) {
       doc.setFontSize(14)
       doc.setFont(undefined, 'bold')
@@ -72,7 +96,6 @@ function App() {
       y += summaryLines.length * 5 + 10
     }
     
-    // WORK EXPERIENCE
     if (cvData.experience) {
       if (y > 250) {
         doc.addPage()
@@ -91,7 +114,6 @@ function App() {
       y += expLines.length * 5 + 10
     }
     
-    // EDUCATION
     if (cvData.education) {
       if (y > 250) {
         doc.addPage()
@@ -110,7 +132,6 @@ function App() {
       y += eduLines.length * 5 + 10
     }
     
-    // SKILLS
     if (cvData.skills) {
       if (y > 250) {
         doc.addPage()
@@ -137,14 +158,18 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <h1>CV Builder prototype by rbbieee</h1>
+        <div className="header-content">
+          <h1>CV Builder prototype by rbbieee</h1>
+          <button onClick={toggleDarkMode} className="dark-mode-toggle">
+            {isDarkMode ? '☀️' : '🌙'}
+          </button>
+        </div>
         <p className="privacy-notice">
           Your data stays in your browser. This app dont store or transmit anything
         </p>
       </header>
 
       <div className="container">
-        {/* FORM SECTION */}
         <div className="form-section">
           <h2>Personal Information</h2>
           
@@ -237,7 +262,6 @@ function App() {
           </div>
         </div>
 
-        {/* PREVIEW SECTION */}
         <div className="preview-section">
           <h2>Preview</h2>
           <div className="cv-preview">
