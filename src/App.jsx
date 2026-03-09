@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { jsPDF } from 'jspdf'
 
 function App() {
-  // state for CV data
   const [cvData, setCvData] = useState({
     fullName: '',
     email: '',
@@ -13,17 +12,14 @@ function App() {
     skills: ''
   })
 
-  // state for dark mode
   const [isDarkMode, setIsDarkMode] = useState(false)
 
-  // load data from LocalStorage 
   useEffect(() => {
     const savedData = localStorage.getItem('cvData')
     if (savedData) {
       setCvData(JSON.parse(savedData))
     }
 
-    // load d a r k m o d e preference
     const savedDarkMode = localStorage.getItem('darkMode')
     if (savedDarkMode === 'true') {
       setIsDarkMode(true)
@@ -31,7 +27,6 @@ function App() {
     }
   }, [])
 
-  // toggle dark mode
   const toggleDarkMode = () => {
     const newMode = !isDarkMode
     setIsDarkMode(newMode)
@@ -64,6 +59,36 @@ function App() {
       })
       localStorage.removeItem('cvData')
     }
+  }
+
+  const fillExampleData = () => {
+    const exampleData = {
+      fullName: 'Michael Chen',
+      email: 'michael.chen@email.com',
+      phone: '+1 (555) 123-4567',
+      summary: 'Results-driven Software Engineer with 5+ years of experience in full-stack development. Specialized in React, Node.js, and cloud technologies. Proven track record of delivering scalable solutions and leading cross-functional teams. Passionate about creating elegant, user-friendly applications that solve real-world problems.',
+      experience: `Senior Software Engineer - TechCorp Inc. (2021 - Present)
+- Led development of enterprise SaaS platform serving 10,000+ users
+- Reduced application load time by 40% through optimization
+- Mentored team of 4 junior developers
+- Implemented CI/CD pipeline reducing deployment time by 60%
+
+Software Engineer - StartupXYZ (2019 - 2021)
+- Built responsive web applications using React and TypeScript
+- Designed and implemented RESTful APIs with Node.js
+- Collaborated with UX team to improve user engagement by 35%
+- Participated in agile sprints and code reviews`,
+      education: `Bachelor of Science in Computer Science
+Massachusetts Institute of Technology (MIT)
+Graduated: May 2019
+GPA: 3.8/4.0
+
+Relevant Coursework: Data Structures, Algorithms, Web Development, Database Systems, Machine Learning`,
+      skills: 'JavaScript, TypeScript, React, Node.js, Express, MongoDB, PostgreSQL, AWS, Docker, Git, Agile/Scrum, REST APIs, GraphQL, CI/CD, Jest, HTML/CSS, Python'
+    }
+    
+    setCvData(exampleData)
+    localStorage.setItem('cvData', JSON.stringify(exampleData))
   }
 
   const exportPDF = () => {
@@ -165,7 +190,7 @@ function App() {
           </button>
         </div>
         <p className="privacy-notice">
-          Your data stays in your browser. This app dont store or transmit anything
+          Your data stays in your browser. This app does not store or transmit anything
         </p>
       </header>
 
@@ -253,6 +278,9 @@ function App() {
           </div>
 
           <div className="button-group">
+            <button onClick={fillExampleData} className="btn-secondary">
+              Fill Example
+            </button>
             <button onClick={exportPDF} className="btn-primary">
               Download PDF
             </button>
